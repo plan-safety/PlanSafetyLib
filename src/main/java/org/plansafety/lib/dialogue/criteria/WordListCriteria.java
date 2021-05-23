@@ -51,11 +51,11 @@ public class WordListCriteria implements IDialogueTreeCriteria {
 		this.allowedWeighting = allowedWeighthing;
 	}
 
-	public float getDisAllowedWeighting() {
+	public float getDisallowedWeighting() {
 		return this.disallowedWeighting;
 	}
 
-	public void setDisAllowedWeighthing(float disallowedWeighthing) {
+	public void setDisallowedWeighthing(float disallowedWeighthing) {
 		this.disallowedWeighting = disallowedWeighthing;
 	}
 
