@@ -6,5 +6,10 @@ public class DialogueTreeVertex {
 
 	private IDialogueTreeCriteria criteria;
 	private DialogueTreeNode node;
-	
+
+	public DialogueTreeVertex(IDialogueTreeCriteria criteria, DialogueTreeNode node) {
+		this.criteria = criteria;
+		this.node = node;
+	}
+
 }
