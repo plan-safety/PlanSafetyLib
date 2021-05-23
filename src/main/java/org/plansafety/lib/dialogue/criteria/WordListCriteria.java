@@ -1,66 +1,39 @@
 package org.plansafety.lib.dialogue.criteria;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.plansafety.lib.conversation.Message;
 import org.plansafety.lib.utils.MathsUtils;
 
 public class WordListCriteria implements IDialogueTreeCriteria {
 
-	private List<String> allowed;
-	private List<String> disallowed;
-
-	private float allowedWeighting;
-	private float disallowedWeighting;
-
-	public WordListCriteria(float allowedWeighting, float disallowedWeighting) {
-		this.allowed = new ArrayList<>();
-		this.disallowed = new ArrayList<>();
-
-		this.allowedWeighting = allowedWeighting;
-		this.disallowedWeighting = disallowedWeighting;
-	}
+	protected Map<List<String>, Float> wordLists;
 
 	public WordListCriteria() {
-		this(1f, 0f);
+		wordLists = new HashMap<>();
 	}
 
-	public void allow(String word) {
-		allowed.add(word);
+	public void addWordList(float weight, List<String> wordList) {
+		wordLists.put(wordList, weight);
 	}
 
-	public void allowAll(String... words) {
-		allowed.addAll(Arrays.asList(words));
+	public List<String> createWordList(float weight, String... words) {
+		List<String> wordList = Arrays.asList(words);
+		addWordList(weight, wordList);
+		return wordList;
 	}
 
-	public void disallow(String word) {
-		disallowed.add(word);
-	}
-
-	public void disallowAll(String... words) {
-		disallowed.addAll(Arrays.asList(words));
-	}
-
-	public float getAllowedWeighting() {
-		return this.allowedWeighting;
-	}
-
-	public void setAllowedWeighthing(float allowedWeighthing) {
-		this.allowedWeighting = allowedWeighthing;
-	}
-
-	public float getDisallowedWeighting() {
-		return this.disallowedWeighting;
-	}
-
-	public void setDisallowedWeighthing(float disallowedWeighthing) {
-		this.disallowedWeighting = disallowedWeighthing;
+	public void removeWordList(List<String> wordList) {
+		wordLists.remove(wordList);
 	}
 
 	protected float evaluateWord(String word) {
-		return disallowed.contains(word) ? disallowedWeighting : allowed.contains(word) ? allowedWeighting : 0f;
+		return wordLists.keySet().stream()
+				.map(list -> list.contains(word) ? wordLists.get(list) : 0f)
+				.reduce(0f, (a,b) -> a + b);
 	}
 
 	@Override
