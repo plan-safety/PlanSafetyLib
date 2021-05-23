@@ -1,21 +1,20 @@
 package org.plansafety.lib.dialogue;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
-import org.plansafety.lib.dialogue.criteria.WordListCriteria;
 
 class DialogueTreeNodeTest {
 
 	@Test
 	void testMessageContent() {
-		
+
 		DialogueTreeNode node = new DialogueTreeNode(null);
-		
+
 		node.setMessageContent("Hello, World!");
-		assertEquals("Hello, World!", node.getMessageContent());	
+		assertEquals("Hello, World!", node.getMessageContent());
 	}
-	
+
 	@Test
 	void testRemove() {
 		DialogueTreeVertex vertex = new DialogueTreeVertex(null, new DialogueTreeNode("A"));
@@ -23,9 +22,9 @@ class DialogueTreeNodeTest {
 		DialogueTreeNode node = new DialogueTreeNode(null, vertex, vertex2);
 
 		assertEquals(2, node.getVerticies().size());
-		
+
 		node.remove(vertex);
-		
+
 		assertEquals(1, node.getVerticies().size());
 		assertEquals(vertex2, node.getVerticies().get(0));
 	}
@@ -38,21 +37,21 @@ class DialogueTreeNodeTest {
 		DialogueTreeNode node = new DialogueTreeNode(null, vertex, vertex2, vertex3);
 
 		assertEquals(vertex2, node.getVerticies().get(1));
-		
+
 		node.removeVertexAt(1);
-		
+
 		assertEquals(vertex3, node.getVerticies().get(1));
 	}
-	
+
 	@Test
 	void testAppend() {
 		DialogueTreeNode node = new DialogueTreeNode(null);
-		
+
 		assertEquals(0, node.getVerticies().size());
-		
+
 		node.append(new DialogueTreeVertex(null, null));
-		
+
 		assertEquals(1, node.getVerticies().size());
 	}
-	
+
 }

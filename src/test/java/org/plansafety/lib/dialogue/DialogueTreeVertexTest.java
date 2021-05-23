@@ -1,9 +1,8 @@
 package org.plansafety.lib.dialogue;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
-import org.plansafety.lib.conversation.Message;
 import org.plansafety.lib.dialogue.criteria.IDialogueTreeCriteria;
 import org.plansafety.lib.dialogue.criteria.WordListCriteria;
 
@@ -35,7 +34,7 @@ class DialogueTreeVertexTest {
 
 		DialogueTreeNode node = new DialogueTreeNode("Hello");
 		vertex.setNode(node);
-		
+
 		assertEquals(node, vertex.getNode());
 	}
 
