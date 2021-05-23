@@ -12,4 +12,20 @@ public class DialogueTreeVertex {
 		this.node = node;
 	}
 
+	public IDialogueTreeCriteria getCriteria() {
+		return this.criteria;
+	}
+
+	public void setCriteria(IDialogueTreeCriteria criteria) {
+		this.criteria = criteria;
+	}
+
+	public DialogueTreeNode getNode() {
+		return this.node;
+	}
+
+	public void setNode(DialogueTreeNode node) {
+		this.node = node;
+	}
+
 }
