@@ -18,15 +18,15 @@ public class WordListCriteria implements IDialogueTreeCriteria {
 	public WordListCriteria(float allowedWeighting, float disallowedWeighting) {
 		this.allowed = new ArrayList<>();
 		this.disallowed = new ArrayList<>();
-		
+
 		this.allowedWeighting = allowedWeighting;
 		this.disallowedWeighting = disallowedWeighting;
 	}
-	
+
 	public WordListCriteria() {
 		this(1f, 0f);
 	}
-	
+
 	public void allow(String word) {
 		allowed.add(word);
 	}
@@ -41,6 +41,22 @@ public class WordListCriteria implements IDialogueTreeCriteria {
 
 	public void disallowAll(String... words) {
 		disallowed.addAll(Arrays.asList(words));
+	}
+
+	public float getAllowedWeighting() {
+		return this.allowedWeighting;
+	}
+
+	public void setAllowedWeighthing(float allowedWeighthing) {
+		this.allowedWeighting = allowedWeighthing;
+	}
+
+	public float getDisAllowedWeighting() {
+		return this.disallowedWeighting;
+	}
+
+	public void setDisAllowedWeighthing(float disallowedWeighthing) {
+		this.disallowedWeighting = disallowedWeighthing;
 	}
 
 	protected float evaluateWord(String word) {
