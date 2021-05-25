@@ -12,7 +12,7 @@ public class WordListCriteria implements IDialogueTreeCriteria {
 
 	public static class Builder {
 
-		private final WordListCriteria criteria;
+		protected WordListCriteria criteria;
 
 		public Builder() {
 			criteria = new WordListCriteria();
