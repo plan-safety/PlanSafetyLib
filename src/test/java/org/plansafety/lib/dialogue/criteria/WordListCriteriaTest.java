@@ -8,8 +8,23 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.plansafety.lib.conversation.Message;
 
 class WordListCriteriaTest {
+
+	@Test
+	void testEvaluate() {
+
+		Message message = new Message("Apple");
+		WordListCriteria criteria = new WordListCriteria.Builder().withWordList("APPLE").build();
+
+		assertFalse(criteria.evaluate(message));
+		
+		criteria.setIgnoreCase(true);
+		
+		assertTrue(criteria.evaluate(message));
+		
+	}
 
 	@Test
 	void testBuilder() {
@@ -38,23 +53,22 @@ class WordListCriteriaTest {
 		List<String> fruits = Arrays.asList("Pear", "Apple", "Orange");
 
 		assertEquals(0, criteria.getWordList().size());
-		
+
 		criteria.setWordList(fruits);
 
 		assertEquals(fruits, criteria.getWordList());
 	}
-	
 
 	@Test
 	void testSetIgnoreCase() {
 		WordListCriteria criteria = new WordListCriteria.Builder().build();
 
 		assertFalse(criteria.getIgnoreCase());
-		
+
 		criteria.setIgnoreCase(true);
-		
+
 		assertTrue(criteria.getIgnoreCase());
-		
+
 	}
-	
+
 }
