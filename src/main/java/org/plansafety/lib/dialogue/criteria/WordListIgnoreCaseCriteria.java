@@ -5,8 +5,8 @@ import java.util.Map.Entry;
 
 public class WordListIgnoreCaseCriteria extends WordListCriteria {
 
-	private WordListIgnoreCaseCriteria() {
-
+	protected WordListIgnoreCaseCriteria() {
+		super();
 	}
 
 	public static class Builder {
