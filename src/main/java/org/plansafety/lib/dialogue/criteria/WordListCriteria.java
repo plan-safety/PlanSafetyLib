@@ -9,47 +9,24 @@ import org.plansafety.lib.conversation.Message;
 
 public class WordListCriteria implements IDialogueTreeCriteria {
 
-	public static class Builder {
+	private List<String> wordList;
+	private boolean ignoreCase;
 
-		protected WordListCriteria criteria;
-
-		public Builder() {
-			criteria = new WordListCriteria();
-		}
-
-		public Builder wordList(float weight, String... words) {
-			criteria.createWordList(weight, words);
-			return this;
-		}
-
-		public WordListCriteria build() {
-			return criteria;
-		}
-
+	private WordListCriteria(List<String> wordList, boolean ignoreCase) {
+		this.wordList = wordList;
+		this.ignoreCase = ignoreCase;
 	}
 
-	protected Map<List<String>, Float> wordLists;
-
-	protected WordListCriteria() {
-		wordLists = new HashMap<>();
+	public List<String> getWordList() {
+		return this.wordList;
 	}
 
-	public void addWordList(float weight, List<String> wordList) {
-		wordLists.put(wordList, weight);
+	public void setWordList(List<String> wordList) {
+		this.wordList = wordList;
 	}
 
-	public List<String> createWordList(float weight, String... words) {
-		List<String> wordList = Arrays.asList(words);
-		addWordList(weight, wordList);
-		return wordList;
-	}
-
-	public void removeWordList(List<String> wordList) {
-		wordLists.remove(wordList);
-	}
-
-	protected boolean evaluateWord(String word) {
-		return wordLists.keySet().stream().anyMatch(list -> list.contains(word));
+	private boolean evaluateWord(String word) {
+		return wordList.stream().anyMatch(other -> ignoreCase ? word.equalsIgnoreCase(other) : word.equals(other));
 	}
 
 	@Override
