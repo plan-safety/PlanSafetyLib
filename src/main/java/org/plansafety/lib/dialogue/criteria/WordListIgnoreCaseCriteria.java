@@ -3,9 +3,6 @@ package org.plansafety.lib.dialogue.criteria;
 import java.util.List;
 import java.util.Map.Entry;
 
-import org.junit.validator.PublicClassValidator;
-import org.plansafety.lib.dialogue.criteria.WordListCriteria.Builder;
-
 public class WordListIgnoreCaseCriteria extends WordListCriteria {
 
 	private WordListIgnoreCaseCriteria() {
