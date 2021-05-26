@@ -21,6 +21,7 @@ class DialogueTreeCriteriaTest {
 	@Test
 	void testSetPriority() {
 		MyTestCriteria criteria = new MyTestCriteria();
+		criteria.evaluate(null); // Just for coverage
 		
 		assertEquals(DialogueTreeCriteria.DEFAULT_PRIORITY, criteria.getPriority());
 	
