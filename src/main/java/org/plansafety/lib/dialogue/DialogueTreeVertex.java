@@ -1,22 +1,22 @@
 package org.plansafety.lib.dialogue;
 
-import org.plansafety.lib.dialogue.criteria.IDialogueTreeCriteria;
+import org.plansafety.lib.dialogue.criteria.DialogueTreeCriteria;
 
 public class DialogueTreeVertex {
 
-	private IDialogueTreeCriteria criteria;
+	private DialogueTreeCriteria criteria;
 	private DialogueTreeNode node;
 
-	public DialogueTreeVertex(IDialogueTreeCriteria criteria, DialogueTreeNode node) {
+	public DialogueTreeVertex(DialogueTreeCriteria criteria, DialogueTreeNode node) {
 		this.criteria = criteria;
 		this.node = node;
 	}
 
-	public IDialogueTreeCriteria getCriteria() {
+	public DialogueTreeCriteria getCriteria() {
 		return this.criteria;
 	}
 
-	public void setCriteria(IDialogueTreeCriteria criteria) {
+	public void setCriteria(DialogueTreeCriteria criteria) {
 		this.criteria = criteria;
 	}
 
