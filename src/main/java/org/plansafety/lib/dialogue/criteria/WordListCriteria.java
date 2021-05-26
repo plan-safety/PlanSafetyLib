@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.plansafety.lib.conversation.Message;
-import org.plansafety.lib.utils.MathsUtils;
 
 public class WordListCriteria implements IDialogueTreeCriteria {
 
@@ -49,17 +48,13 @@ public class WordListCriteria implements IDialogueTreeCriteria {
 		wordLists.remove(wordList);
 	}
 
-	protected float evaluateWord(String word) {
-		return wordLists.keySet().stream().map(list -> list.contains(word) ? wordLists.get(list) : 0f).reduce(0f,
-				(a, b) -> a + b);
+	protected boolean evaluateWord(String word) {
+		return wordLists.keySet().stream().anyMatch(list -> list.contains(word));
 	}
 
 	@Override
-	public float evaluate(Message message) {
-
-		float val = Arrays.stream(message.getWords()).map(this::evaluateWord).reduce(0f, (a, b) -> a + b);
-
-		return MathsUtils.clamp(val, 0f, 1f);
+	public boolean evaluate(Message message) {
+		return Arrays.stream(message.getWords()).anyMatch(this::evaluateWord);
 	}
 
 }
