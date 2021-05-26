@@ -3,11 +3,29 @@ package org.plansafety.lib.dialogue.criteria;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.junit.validator.PublicClassValidator;
+import org.plansafety.lib.dialogue.criteria.WordListCriteria.Builder;
+
 public class WordListIgnoreCaseCriteria extends WordListCriteria {
 
-	public static class Builder extends WordListCriteria.Builder {
+	private WordListIgnoreCaseCriteria() {
+
+	}
+
+	public static class Builder {
+		protected WordListIgnoreCaseCriteria criteria;
+
 		public Builder() {
 			criteria = new WordListIgnoreCaseCriteria();
+		}
+
+		public Builder wordList(float weight, String... words) {
+			criteria.createWordList(weight, words);
+			return this;
+		}
+
+		public WordListIgnoreCaseCriteria build() {
+			return criteria;
 		}
 	}
 
