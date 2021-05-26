@@ -2,9 +2,7 @@ package org.plansafety.lib.dialogue.criteria;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.plansafety.lib.conversation.Message;
 
@@ -24,6 +22,14 @@ public class WordListCriteria implements IDialogueTreeCriteria {
 
 	public void setWordList(List<String> wordList) {
 		this.wordList = wordList;
+	}
+
+	public boolean getIgnoreCase() {
+		return this.ignoreCase;
+	}
+
+	public void setIgnoreCase(boolean ignoreCase) {
+		this.ignoreCase = ignoreCase;
 	}
 
 	private boolean evaluateWord(String word) {
