@@ -11,11 +11,10 @@ class WordListIgnoreCaseCriteriaTest {
 	void testEvaluate() {
 		Message message = new Message("Apples Pears Lemons Car Bike Plane Milk Ice_Cream");
 
-		WordListIgnoreCaseCriteria criteria = new WordListIgnoreCaseCriteria();
-		criteria.createWordList(0.15f, "apples", "PEARS", "Lemons");
-		criteria.createWordList(-0.1f, "Milk", "Ice_Cream", "Cake");
-		
-		assertEquals(0.25f, criteria.evaluate(message), 0.001f);	
+		WordListIgnoreCaseCriteria criteria = new WordListIgnoreCaseCriteria.Builder()
+				.wordList(0.15f, "apples", "PEARS", "Lemons").wordList(-0.1f, "Milk", "Ice_Cream", "Cake").build();
+
+		assertEquals(0.25f, criteria.evaluate(message), 0.001f);
 	}
 
 }

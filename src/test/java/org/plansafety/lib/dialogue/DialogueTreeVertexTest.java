@@ -10,7 +10,7 @@ class DialogueTreeVertexTest {
 
 	@Test
 	void testDialogueTreeVertex() {
-		IDialogueTreeCriteria criteria = new WordListCriteria();
+		IDialogueTreeCriteria criteria = new WordListCriteria.Builder().build();
 		DialogueTreeNode node = new DialogueTreeNode("Hello");
 		DialogueTreeVertex vertex = new DialogueTreeVertex(criteria, node);
 
@@ -22,7 +22,7 @@ class DialogueTreeVertexTest {
 	void testSetCriteria() {
 		DialogueTreeVertex vertex = new DialogueTreeVertex(null, null);
 
-		IDialogueTreeCriteria criteria = new WordListCriteria();
+		IDialogueTreeCriteria criteria = new WordListCriteria.Builder().build();
 		vertex.setCriteria(criteria);
 
 		assertEquals(criteria, vertex.getCriteria());

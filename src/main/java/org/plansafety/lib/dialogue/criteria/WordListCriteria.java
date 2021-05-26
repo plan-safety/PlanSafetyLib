@@ -10,9 +10,28 @@ import org.plansafety.lib.utils.MathsUtils;
 
 public class WordListCriteria implements IDialogueTreeCriteria {
 
+	public static class Builder {
+
+		protected WordListCriteria criteria;
+
+		public Builder() {
+			criteria = new WordListCriteria();
+		}
+
+		public Builder wordList(float weight, String... words) {
+			criteria.createWordList(weight, words);
+			return this;
+		}
+
+		public WordListCriteria build() {
+			return criteria;
+		}
+
+	}
+
 	protected Map<List<String>, Float> wordLists;
 
-	public WordListCriteria() {
+	protected WordListCriteria() {
 		wordLists = new HashMap<>();
 	}
 
@@ -31,9 +50,8 @@ public class WordListCriteria implements IDialogueTreeCriteria {
 	}
 
 	protected float evaluateWord(String word) {
-		return wordLists.keySet().stream()
-				.map(list -> list.contains(word) ? wordLists.get(list) : 0f)
-				.reduce(0f, (a,b) -> a + b);
+		return wordLists.keySet().stream().map(list -> list.contains(word) ? wordLists.get(list) : 0f).reduce(0f,
+				(a, b) -> a + b);
 	}
 
 	@Override

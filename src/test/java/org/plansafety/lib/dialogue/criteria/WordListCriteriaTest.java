@@ -29,10 +29,9 @@ class WordListCriteriaTest {
 	void testEvaluate() {
 		Message message = new Message("Apples Pears Lemons Car Bike Plane Milk Ice_Cream");
 
-		WordListCriteria criteria = new WordListCriteria();
-		criteria.createWordList(0.15f, "Apples", "Pears", "Lemons");
-		criteria.createWordList(-0.1f, "Milk", "Ice_Cream", "Cake");
-		
+		WordListCriteria criteria = new WordListCriteria.Builder().wordList(0.15f, "Apples", "Pears", "Lemons")
+				.wordList(-0.1f, "Milk", "Ice_Cream", "Cake").build();
+
 		assertEquals(0.25f, criteria.evaluate(message), 0.001f);	
 	}
 	
