@@ -6,12 +6,13 @@ import java.util.List;
 
 import org.plansafety.lib.conversation.Message;
 
-public class WordListCriteria implements IDialogueTreeCriteria {
+public class WordListCriteria extends DialogueTreeCriteria {
 
 	private List<String> wordList;
 	private boolean ignoreCase;
 
-	private WordListCriteria(List<String> wordList, boolean ignoreCase) {
+	private WordListCriteria(List<String> wordList, boolean ignoreCase, int priority) {
+		super(priority);
 		this.wordList = wordList;
 		this.ignoreCase = ignoreCase;
 	}
@@ -45,14 +46,16 @@ public class WordListCriteria implements IDialogueTreeCriteria {
 
 		private List<String> wordList;
 		private boolean ignoreCase;
+		private int priority;
 
 		public Builder() {
 			this.wordList = new ArrayList<String>();
 			this.ignoreCase = false;
+			this.priority = DialogueTreeCriteria.DEFAULT_PRIORITY;
 		}
 
 		public WordListCriteria build() {
-			return new WordListCriteria(wordList, ignoreCase);
+			return new WordListCriteria(wordList, ignoreCase, priority);
 		}
 
 		public Builder withWordList(List<String> wordList) {
@@ -62,6 +65,11 @@ public class WordListCriteria implements IDialogueTreeCriteria {
 
 		public Builder withWordList(String... words) {
 			this.wordList = new ArrayList<>(Arrays.asList(words));
+			return this;
+		}
+
+		public Builder withPriority(int priority) {
+			this.priority = priority;
 			return this;
 		}
 
