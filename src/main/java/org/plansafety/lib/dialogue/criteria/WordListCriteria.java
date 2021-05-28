@@ -1,65 +1,87 @@
 package org.plansafety.lib.dialogue.criteria;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.plansafety.lib.conversation.Message;
-import org.plansafety.lib.utils.MathsUtils;
 
-public class WordListCriteria implements IDialogueTreeCriteria {
+public class WordListCriteria extends DialogueTreeCriteria {
 
-	public static class Builder {
+	private List<String> wordList;
+	private boolean ignoreCase;
 
-		protected WordListCriteria criteria;
-
-		public Builder() {
-			criteria = new WordListCriteria();
-		}
-
-		public Builder wordList(float weight, String... words) {
-			criteria.createWordList(weight, words);
-			return this;
-		}
-
-		public WordListCriteria build() {
-			return criteria;
-		}
-
+	private WordListCriteria(List<String> wordList, boolean ignoreCase, int priority) {
+		super(priority);
+		this.wordList = wordList;
+		this.ignoreCase = ignoreCase;
 	}
 
-	protected Map<List<String>, Float> wordLists;
-
-	protected WordListCriteria() {
-		wordLists = new HashMap<>();
+	public List<String> getWordList() {
+		return this.wordList;
 	}
 
-	public void addWordList(float weight, List<String> wordList) {
-		wordLists.put(wordList, weight);
+	public void setWordList(List<String> wordList) {
+		this.wordList = wordList;
 	}
 
-	public List<String> createWordList(float weight, String... words) {
-		List<String> wordList = Arrays.asList(words);
-		addWordList(weight, wordList);
-		return wordList;
+	public boolean getIgnoreCase() {
+		return this.ignoreCase;
 	}
 
-	public void removeWordList(List<String> wordList) {
-		wordLists.remove(wordList);
+	public void setIgnoreCase(boolean ignoreCase) {
+		this.ignoreCase = ignoreCase;
 	}
 
-	protected float evaluateWord(String word) {
-		return wordLists.keySet().stream().map(list -> list.contains(word) ? wordLists.get(list) : 0f).reduce(0f,
-				(a, b) -> a + b);
+	private boolean evaluateWord(String word) {
+		return wordList.stream().anyMatch(other -> ignoreCase ? word.equalsIgnoreCase(other) : word.equals(other));
 	}
 
 	@Override
-	public float evaluate(Message message) {
+	public boolean evaluate(Message message) {
+		return Arrays.stream(message.getWords()).anyMatch(this::evaluateWord);
+	}
 
-		float val = Arrays.stream(message.getWords()).map(this::evaluateWord).reduce(0f, (a, b) -> a + b);
+	public static class Builder {
 
-		return MathsUtils.clamp(val, 0f, 1f);
+		private List<String> wordList;
+		private boolean ignoreCase;
+		private int priority;
+
+		public Builder() {
+			this.wordList = new ArrayList<String>();
+			this.ignoreCase = false;
+			this.priority = DialogueTreeCriteria.DEFAULT_PRIORITY;
+		}
+
+		public WordListCriteria build() {
+			return new WordListCriteria(wordList, ignoreCase, priority);
+		}
+
+		public Builder withWordList(List<String> wordList) {
+			this.wordList = wordList;
+			return this;
+		}
+
+		public Builder withWordList(String... words) {
+			this.wordList = new ArrayList<>(Arrays.asList(words));
+			return this;
+		}
+
+		public Builder withPriority(int priority) {
+			this.priority = priority;
+			return this;
+		}
+
+		public Builder withIgnoreCase(boolean ignoreCase) {
+			this.ignoreCase = ignoreCase;
+			return this;
+		}
+
+		public Builder ignoringCase() {
+			return withIgnoreCase(true);
+		}
+
 	}
 
 }

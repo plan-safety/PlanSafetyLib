@@ -1,6 +1,6 @@
 package org.plansafety.lib.dialogue;
 
-import org.plansafety.lib.dialogue.criteria.IDialogueTreeCriteria;
+import org.plansafety.lib.dialogue.criteria.DialogueTreeCriteria;
 
 public class DialogueTree {
 
@@ -18,7 +18,7 @@ public class DialogueTree {
 		this.root = root;
 	}
 
-	public void prepend(DialogueTreeNode node, IDialogueTreeCriteria oldRootCritiria) {
+	public void prepend(DialogueTreeNode node, DialogueTreeCriteria oldRootCritiria) {
 		DialogueTreeNode temp = root;
 
 		root = node;
