@@ -26,12 +26,12 @@ public abstract class DialogueTreeCriteria {
 		this.priority = priority;
 	}
 
+	public abstract boolean equalsIgnorePriority(Object object);
+
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof DialogueTreeCriteria))
-			return super.equals(obj);
-
-		return ((DialogueTreeCriteria) obj).getPriority() == priority;
+		return obj instanceof DialogueTreeCriteria && this.equalsIgnorePriority(obj)
+				&& priority == ((DialogueTreeCriteria) obj).priority;
 	}
 
 }

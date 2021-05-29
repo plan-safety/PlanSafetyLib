@@ -85,17 +85,16 @@ public class WordListCriteria extends DialogueTreeCriteria implements Serializab
 			return withIgnoreCase(true);
 		}
 
-		@Override
-		public boolean equals(Object obj) {
-			if (!(obj instanceof WordListCriteria))
-				return false;
+	}
 
-			WordListCriteria other = (WordListCriteria) obj;
+	@Override
+	public boolean equalsIgnorePriority(Object obj) {
+		if (!(obj instanceof WordListCriteria))
+			return super.equals(obj);
 
-			return super.equals(obj) && other.getWordList().equals(wordList) && other.getIgnoreCase() == ignoreCase;
+		WordListCriteria other = (WordListCriteria) obj;
 
-		}
-
+		return other.getWordList().equals(wordList) && other.getIgnoreCase() == ignoreCase;
 	}
 
 }
