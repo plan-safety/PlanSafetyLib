@@ -32,7 +32,7 @@ public class DialogueTree implements Serializable {
 	@Override
 	public boolean equals(Object obj) {
 		if (!(obj instanceof DialogueTree))
-			return false;
+			return super.equals(obj);
 		
 		DialogueTree other = (DialogueTree) obj;
 		
