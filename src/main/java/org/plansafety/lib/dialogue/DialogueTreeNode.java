@@ -41,4 +41,14 @@ public class DialogueTreeNode implements Serializable {
 		verticies.add(vertex);
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof DialogueTreeNode))
+			return super.equals(obj);
+
+		DialogueTreeNode other = (DialogueTreeNode) obj;
+
+		return other.getMessageContent().equals(messageContent) && other.getVerticies().equals(verticies);
+	}
+
 }
