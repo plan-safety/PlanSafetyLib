@@ -1,8 +1,12 @@
 package org.plansafety.lib.dialogue;
 
+import java.io.Serializable;
+
 import org.plansafety.lib.dialogue.criteria.DialogueTreeCriteria;
 
-public class DialogueTree {
+public class DialogueTree implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private DialogueTreeNode root;
 

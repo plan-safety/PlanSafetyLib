@@ -1,10 +1,13 @@
 package org.plansafety.lib.dialogue;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DialogueTreeNode {
+public class DialogueTreeNode implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private String messageContent;
 	private final List<DialogueTreeVertex> verticies;
