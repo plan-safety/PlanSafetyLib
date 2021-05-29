@@ -3,6 +3,7 @@ package org.plansafety.lib.dialogue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
+import org.plansafety.lib.dialogue.criteria.WordListCriteria;
 
 class DialogueTreeNodeTest {
 
@@ -17,8 +18,10 @@ class DialogueTreeNodeTest {
 
 	@Test
 	void testRemove() {
-		DialogueTreeVertex vertex = new DialogueTreeVertex(null, new DialogueTreeNode("A"));
-		DialogueTreeVertex vertex2 = new DialogueTreeVertex(null, new DialogueTreeNode("B"));
+		DialogueTreeVertex vertex = new DialogueTreeVertex(new WordListCriteria.Builder().withWordList("Hi").build(),
+				new DialogueTreeNode("A"));
+		DialogueTreeVertex vertex2 = new DialogueTreeVertex(new WordListCriteria.Builder().build(),
+				new DialogueTreeNode("B"));
 		DialogueTreeNode node = new DialogueTreeNode(null, vertex, vertex2);
 
 		assertEquals(2, node.getVerticies().size());
@@ -31,9 +34,12 @@ class DialogueTreeNodeTest {
 
 	@Test
 	void testRemoveVertexAt() {
-		DialogueTreeVertex vertex = new DialogueTreeVertex(null, new DialogueTreeNode("A"));
-		DialogueTreeVertex vertex2 = new DialogueTreeVertex(null, new DialogueTreeNode("B"));
-		DialogueTreeVertex vertex3 = new DialogueTreeVertex(null, new DialogueTreeNode("C"));
+		DialogueTreeVertex vertex = new DialogueTreeVertex(new WordListCriteria.Builder().withWordList("Hi").build(),
+				new DialogueTreeNode("A"));
+		DialogueTreeVertex vertex2 = new DialogueTreeVertex(
+				new WordListCriteria.Builder().withWordList("Hello").build(), new DialogueTreeNode("B"));
+		DialogueTreeVertex vertex3 = new DialogueTreeVertex(new WordListCriteria.Builder().build(),
+				new DialogueTreeNode("C"));
 		DialogueTreeNode node = new DialogueTreeNode(null, vertex, vertex2, vertex3);
 
 		assertEquals(vertex2, node.getVerticies().get(1));

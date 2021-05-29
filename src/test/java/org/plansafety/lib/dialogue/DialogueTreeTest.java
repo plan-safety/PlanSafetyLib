@@ -4,8 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import org.junit.jupiter.api.Test;
@@ -41,7 +43,7 @@ class DialogueTreeTest {
 	}
 
 	@Test
-	void testSerialisation() throws IOException {
+	void testSerialisation() throws IOException, ClassNotFoundException {
 
 		DialogueTree tree = new DialogueTree(new DialogueTreeNode("Hello, World!",
 				new DialogueTreeVertex(
@@ -53,14 +55,22 @@ class DialogueTreeTest {
 
 		// Serialise
 
-		ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
-		ObjectOutputStream out = new ObjectOutputStream(byteArrayStream);
+		ByteArrayOutputStream bOut = new ByteArrayOutputStream();
+		ObjectOutputStream out = new ObjectOutputStream(bOut);
 
 		out.writeObject(tree);
-		
+
+		byte[] bytes = bOut.toByteArray();
+
 		// Deserialise
-		
-		
+
+		ByteArrayInputStream bIn = new ByteArrayInputStream(bytes);
+		ObjectInputStream in = new ObjectInputStream(bIn);
+
+		DialogueTree obj = (DialogueTree) in.readObject();
+
+		assertEquals(tree, obj);
+
 	}
 
 }
