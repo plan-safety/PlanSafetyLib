@@ -28,5 +28,15 @@ public class DialogueTree implements Serializable {
 		root = node;
 		root.append(new DialogueTreeVertex(oldRootCritiria, temp));
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof DialogueTree))
+			return false;
+		
+		DialogueTree other = (DialogueTree) obj;
+		
+		return root.equals(other.getRoot());
+	}
 
 }
