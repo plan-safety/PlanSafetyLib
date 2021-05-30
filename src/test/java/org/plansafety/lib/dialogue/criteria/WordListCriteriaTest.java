@@ -84,4 +84,16 @@ class WordListCriteriaTest {
 		assertNotEquals(a, b);
 	}
 
+	@Test
+	void testEqualsIgnorePriority() {
+
+		WordListCriteria.Builder builder = new WordListCriteria.Builder().ignoringCase().withWordList("A", "B", "C");
+
+		WordListCriteria a = builder.build();
+		WordListCriteria b = builder.withPriority(DialogueTreeCriteria.DEFAULT_PRIORITY + 1).build();
+
+		assertNotEquals(a, b);
+		assertTrue(a.equalsIgnorePriority(b));
+		assertFalse(a.equalsIgnorePriority(new Object()));
+	}
 }
