@@ -39,7 +39,8 @@ public class DialogueTreeVertex implements Serializable {
 
 		DialogueTreeVertex other = (DialogueTreeVertex) obj;
 
-		return other.getCriteria().equals(criteria) && other.getNode().equals(node);
+		return ((criteria == null && other.getCriteria() == null)
+				|| (criteria != null && other.getCriteria().equals(criteria))) && other.getNode().equals(node);
 	}
 
 }
