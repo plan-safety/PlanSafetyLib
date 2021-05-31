@@ -1,10 +1,13 @@
 package org.plansafety.lib.dialogue;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DialogueTreeNode {
+public class DialogueTreeNode implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private String messageContent;
 	private final List<DialogueTreeVertex> verticies;
@@ -36,6 +39,16 @@ public class DialogueTreeNode {
 
 	public void append(DialogueTreeVertex vertex) {
 		verticies.add(vertex);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof DialogueTreeNode))
+			return super.equals(obj);
+
+		DialogueTreeNode other = (DialogueTreeNode) obj;
+
+		return other.getMessageContent().equals(messageContent) && other.getVerticies().equals(verticies);
 	}
 
 }

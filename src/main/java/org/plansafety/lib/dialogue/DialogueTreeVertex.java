@@ -1,22 +1,26 @@
 package org.plansafety.lib.dialogue;
 
-import org.plansafety.lib.dialogue.criteria.IDialogueTreeCriteria;
+import java.io.Serializable;
 
-public class DialogueTreeVertex {
+import org.plansafety.lib.dialogue.criteria.DialogueTreeCriteria;
 
-	private IDialogueTreeCriteria criteria;
+public class DialogueTreeVertex implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	private DialogueTreeCriteria criteria;
 	private DialogueTreeNode node;
 
-	public DialogueTreeVertex(IDialogueTreeCriteria criteria, DialogueTreeNode node) {
+	public DialogueTreeVertex(DialogueTreeCriteria criteria, DialogueTreeNode node) {
 		this.criteria = criteria;
 		this.node = node;
 	}
 
-	public IDialogueTreeCriteria getCriteria() {
+	public DialogueTreeCriteria getCriteria() {
 		return this.criteria;
 	}
 
-	public void setCriteria(IDialogueTreeCriteria criteria) {
+	public void setCriteria(DialogueTreeCriteria criteria) {
 		this.criteria = criteria;
 	}
 
@@ -26,6 +30,17 @@ public class DialogueTreeVertex {
 
 	public void setNode(DialogueTreeNode node) {
 		this.node = node;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof DialogueTreeVertex))
+			return super.equals(obj);
+
+		DialogueTreeVertex other = (DialogueTreeVertex) obj;
+
+		return ((criteria == null && other.getCriteria() == null)
+				|| (criteria != null && other.getCriteria().equals(criteria))) && other.getNode().equals(node);
 	}
 
 }

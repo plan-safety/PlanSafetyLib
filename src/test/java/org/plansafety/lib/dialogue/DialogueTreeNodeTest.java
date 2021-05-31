@@ -1,8 +1,11 @@
 package org.plansafety.lib.dialogue;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.Test;
+import org.plansafety.lib.dialogue.criteria.WordListCriteria;
 
 class DialogueTreeNodeTest {
 
@@ -17,8 +20,10 @@ class DialogueTreeNodeTest {
 
 	@Test
 	void testRemove() {
-		DialogueTreeVertex vertex = new DialogueTreeVertex(null, new DialogueTreeNode("A"));
-		DialogueTreeVertex vertex2 = new DialogueTreeVertex(null, new DialogueTreeNode("B"));
+		DialogueTreeVertex vertex = new DialogueTreeVertex(new WordListCriteria.Builder().withWordList("Hi").build(),
+				new DialogueTreeNode("A"));
+		DialogueTreeVertex vertex2 = new DialogueTreeVertex(new WordListCriteria.Builder().build(),
+				new DialogueTreeNode("B"));
 		DialogueTreeNode node = new DialogueTreeNode(null, vertex, vertex2);
 
 		assertEquals(2, node.getVerticies().size());
@@ -31,9 +36,12 @@ class DialogueTreeNodeTest {
 
 	@Test
 	void testRemoveVertexAt() {
-		DialogueTreeVertex vertex = new DialogueTreeVertex(null, new DialogueTreeNode("A"));
-		DialogueTreeVertex vertex2 = new DialogueTreeVertex(null, new DialogueTreeNode("B"));
-		DialogueTreeVertex vertex3 = new DialogueTreeVertex(null, new DialogueTreeNode("C"));
+		DialogueTreeVertex vertex = new DialogueTreeVertex(new WordListCriteria.Builder().withWordList("Hi").build(),
+				new DialogueTreeNode("A"));
+		DialogueTreeVertex vertex2 = new DialogueTreeVertex(
+				new WordListCriteria.Builder().withWordList("Hello").build(), new DialogueTreeNode("B"));
+		DialogueTreeVertex vertex3 = new DialogueTreeVertex(new WordListCriteria.Builder().build(),
+				new DialogueTreeNode("C"));
 		DialogueTreeNode node = new DialogueTreeNode(null, vertex, vertex2, vertex3);
 
 		assertEquals(vertex2, node.getVerticies().get(1));
@@ -52,6 +60,20 @@ class DialogueTreeNodeTest {
 		node.append(new DialogueTreeVertex(null, null));
 
 		assertEquals(1, node.getVerticies().size());
+	}
+
+	@Test
+	void testEquals() {
+		DialogueTreeNode a = new DialogueTreeNode("A");
+		DialogueTreeNode a1 = new DialogueTreeNode("A");
+		DialogueTreeNode b = new DialogueTreeNode("B");
+
+		assertEquals(a, a);
+		assertEquals(a, a1);
+		
+		assertNotEquals(a, b);
+		assertNotEquals(a, new Object());
+		
 	}
 
 }

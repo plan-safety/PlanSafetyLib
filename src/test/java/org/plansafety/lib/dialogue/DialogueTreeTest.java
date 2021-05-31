@@ -1,10 +1,18 @@
 package org.plansafety.lib.dialogue;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import org.junit.jupiter.api.Test;
+import org.plansafety.lib.dialogue.criteria.WordListCriteria;
 
 class DialogueTreeTest {
 
@@ -35,4 +43,71 @@ class DialogueTreeTest {
 		assertNotNull(tree.getRoot());
 	}
 
+	@Test
+	void testSerialisation() throws IOException, ClassNotFoundException {
+
+		DialogueTree tree = new DialogueTree(new DialogueTreeNode("Hello, World!",
+				new DialogueTreeVertex(
+						new WordListCriteria.Builder().withWordList("A", "B", "C").ignoringCase().build(),
+						new DialogueTreeNode("ABC")),
+				new DialogueTreeVertex(
+						new WordListCriteria.Builder().withWordList("1", "2", "3").withPriority(11).build(),
+						new DialogueTreeNode("123"))));
+
+		// Serialise
+
+		ByteArrayOutputStream bOut = new ByteArrayOutputStream();
+		ObjectOutputStream out = new ObjectOutputStream(bOut);
+
+		out.writeObject(tree);
+
+		byte[] bytes = bOut.toByteArray();
+
+		// Deserialise
+
+		ByteArrayInputStream bIn = new ByteArrayInputStream(bytes);
+		ObjectInputStream in = new ObjectInputStream(bIn);
+
+		DialogueTree obj = (DialogueTree) in.readObject();
+
+		assertEquals(tree, obj);
+
+	}
+
+	@Test
+	void testEquals() {
+		
+		DialogueTree a = new DialogueTree(new DialogueTreeNode("Hello, World!",
+				new DialogueTreeVertex(
+						new WordListCriteria.Builder().withWordList("A", "B", "C").ignoringCase().build(),
+						new DialogueTreeNode("ABC")),
+				new DialogueTreeVertex(
+						new WordListCriteria.Builder().withWordList("1", "2", "3").withPriority(11).build(),
+						new DialogueTreeNode("123"))));
+		
+		DialogueTree a1 = new DialogueTree(new DialogueTreeNode("Hello, World!",
+				new DialogueTreeVertex(
+						new WordListCriteria.Builder().withWordList("A", "B", "C").ignoringCase().build(),
+						new DialogueTreeNode("ABC")),
+				new DialogueTreeVertex(
+						new WordListCriteria.Builder().withWordList("1", "2", "3").withPriority(11).build(),
+						new DialogueTreeNode("123"))));
+		
+		DialogueTree b = new DialogueTree(new DialogueTreeNode("Apples",
+				new DialogueTreeVertex(
+						new WordListCriteria.Builder().withWordList("Milk", "Cheese", "Fruit").ignoringCase().build(),
+						new DialogueTreeNode("Food")),
+				new DialogueTreeVertex(
+						new WordListCriteria.Builder().withWordList("Car", "Bike", "Plane").withPriority(11).build(),
+						new DialogueTreeNode("Vehicle"))));
+	
+		
+		assertNotEquals(a, b);
+		assertNotEquals(a, (Object) 1);
+		assertEquals(a, a);
+		assertEquals(a, a1);
+
+		
+	}
+	
 }
