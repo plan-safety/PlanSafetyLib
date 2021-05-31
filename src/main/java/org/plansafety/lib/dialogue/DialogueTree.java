@@ -1,8 +1,12 @@
 package org.plansafety.lib.dialogue;
 
+import java.io.Serializable;
+
 import org.plansafety.lib.dialogue.criteria.DialogueTreeCriteria;
 
-public class DialogueTree {
+public class DialogueTree implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private DialogueTreeNode root;
 
@@ -23,6 +27,16 @@ public class DialogueTree {
 
 		root = node;
 		root.append(new DialogueTreeVertex(oldRootCritiria, temp));
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof DialogueTree))
+			return super.equals(obj);
+		
+		DialogueTree other = (DialogueTree) obj;
+		
+		return root.equals(other.getRoot());
 	}
 
 }

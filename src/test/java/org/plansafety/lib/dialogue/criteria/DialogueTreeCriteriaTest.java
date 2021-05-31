@@ -16,12 +16,19 @@ class DialogueTreeCriteriaTest {
 		public boolean evaluate(Message message) {
 			return false;
 		}
+
+		@Override
+		public boolean equalsIgnorePriority(Object object) {
+			// TODO Auto-generated method stub
+			return false;
+		}
 	}
 	
 	@Test
 	void testSetPriority() {
 		MyTestCriteria criteria = new MyTestCriteria();
 		criteria.evaluate(null); // Just for coverage
+		criteria.equalsIgnorePriority(null); // Just for coverage
 		
 		assertEquals(DialogueTreeCriteria.DEFAULT_PRIORITY, criteria.getPriority());
 	

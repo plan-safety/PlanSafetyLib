@@ -3,6 +3,7 @@ package org.plansafety.lib.dialogue.criteria;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,11 +20,11 @@ class WordListCriteriaTest {
 		WordListCriteria criteria = new WordListCriteria.Builder().withWordList("APPLE").build();
 
 		assertFalse(criteria.evaluate(message));
-		
+
 		criteria.setIgnoreCase(true);
-		
+
 		assertTrue(criteria.evaluate(message));
-		
+
 	}
 
 	@Test
@@ -71,4 +72,28 @@ class WordListCriteriaTest {
 
 	}
 
+	@Test
+	void testEquals() {
+
+		WordListCriteria a = new WordListCriteria.Builder().ignoringCase().withWordList("A", "B", "C").build();
+		WordListCriteria a1 = new WordListCriteria.Builder().ignoringCase().withWordList("A", "B", "C").build();
+		WordListCriteria b = new WordListCriteria.Builder().withWordList("D").build();
+
+		assertEquals(a, a);
+		assertEquals(a, a1);
+		assertNotEquals(a, b);
+	}
+
+	@Test
+	void testEqualsIgnorePriority() {
+
+		WordListCriteria.Builder builder = new WordListCriteria.Builder().ignoringCase().withWordList("A", "B", "C");
+
+		WordListCriteria a = builder.build();
+		WordListCriteria b = builder.withPriority(DialogueTreeCriteria.DEFAULT_PRIORITY + 1).build();
+
+		assertNotEquals(a, b);
+		assertTrue(a.equalsIgnorePriority(b));
+		assertFalse(a.equalsIgnorePriority(new Object()));
+	}
 }

@@ -1,12 +1,15 @@
 package org.plansafety.lib.dialogue.criteria;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.plansafety.lib.conversation.Message;
 
-public class WordListCriteria extends DialogueTreeCriteria {
+public class WordListCriteria extends DialogueTreeCriteria implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private List<String> wordList;
 	private boolean ignoreCase;
@@ -82,6 +85,16 @@ public class WordListCriteria extends DialogueTreeCriteria {
 			return withIgnoreCase(true);
 		}
 
+	}
+
+	@Override
+	public boolean equalsIgnorePriority(Object obj) {
+		if (!(obj instanceof WordListCriteria))
+			return super.equals(obj);
+
+		WordListCriteria other = (WordListCriteria) obj;
+
+		return other.getWordList().equals(wordList) && other.getIgnoreCase() == ignoreCase;
 	}
 
 }
