@@ -1,6 +1,7 @@
 package org.plansafety.lib.dialogue;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -73,4 +74,40 @@ class DialogueTreeTest {
 
 	}
 
+	@Test
+	void testEquals() {
+		
+		DialogueTree a = new DialogueTree(new DialogueTreeNode("Hello, World!",
+				new DialogueTreeVertex(
+						new WordListCriteria.Builder().withWordList("A", "B", "C").ignoringCase().build(),
+						new DialogueTreeNode("ABC")),
+				new DialogueTreeVertex(
+						new WordListCriteria.Builder().withWordList("1", "2", "3").withPriority(11).build(),
+						new DialogueTreeNode("123"))));
+		
+		DialogueTree a1 = new DialogueTree(new DialogueTreeNode("Hello, World!",
+				new DialogueTreeVertex(
+						new WordListCriteria.Builder().withWordList("A", "B", "C").ignoringCase().build(),
+						new DialogueTreeNode("ABC")),
+				new DialogueTreeVertex(
+						new WordListCriteria.Builder().withWordList("1", "2", "3").withPriority(11).build(),
+						new DialogueTreeNode("123"))));
+		
+		DialogueTree b = new DialogueTree(new DialogueTreeNode("Apples",
+				new DialogueTreeVertex(
+						new WordListCriteria.Builder().withWordList("Milk", "Cheese", "Fruit").ignoringCase().build(),
+						new DialogueTreeNode("Food")),
+				new DialogueTreeVertex(
+						new WordListCriteria.Builder().withWordList("Car", "Bike", "Plane").withPriority(11).build(),
+						new DialogueTreeNode("Vehicle"))));
+	
+		
+		assertNotEquals(a, b);
+		assertNotEquals(a, (Object) 1);
+		assertEquals(a, a);
+		assertEquals(a, a1);
+
+		
+	}
+	
 }
