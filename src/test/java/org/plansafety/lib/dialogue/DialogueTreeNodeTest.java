@@ -1,6 +1,8 @@
 package org.plansafety.lib.dialogue;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.Test;
 import org.plansafety.lib.dialogue.criteria.WordListCriteria;
@@ -58,6 +60,20 @@ class DialogueTreeNodeTest {
 		node.append(new DialogueTreeVertex(null, null));
 
 		assertEquals(1, node.getVerticies().size());
+	}
+
+	@Test
+	void testEquals() {
+		DialogueTreeNode a = new DialogueTreeNode("A");
+		DialogueTreeNode a1 = new DialogueTreeNode("A");
+		DialogueTreeNode b = new DialogueTreeNode("B");
+
+		assertEquals(a, a);
+		assertEquals(a, a1);
+		
+		assertNotEquals(a, b);
+		assertNotEquals(a, new Object());
+		
 	}
 
 }
